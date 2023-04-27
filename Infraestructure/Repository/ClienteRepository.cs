@@ -24,9 +24,9 @@ namespace Infraestructure.Repository
         {
             try
             {
-                connection.Execute("insert into cliente(nombre, apellido, email, telefono, documentonum, nacionalidad," +
+                connection.Execute("insert into cliente(id, nombre, apellido, email, telefono, documentonum, nacionalidad," +
                     "fechanacimiento, ciudad, idciudad) " +
-                    " values(@nombre, @apellido, @email, @telefono, @documentonum, @nacionalidad," +
+                    " values(@id, @nombre, @apellido, @email, @telefono, @documentonum, @nacionalidad," +
                     "@fechanacimiento, @ciudad, @idciudad)", cliente);
                 return "Se inserto correctamente...";
             }
@@ -42,14 +42,16 @@ namespace Infraestructure.Repository
             try
             {
                 connection.Execute($"UPDATE cliente SET " +
+                   // "id = @id," +
                     "nombre = @nombre, " +
                     "apellido = @apellido, " +
                     "email = @email, " +
                     "telefono = @telefono, " +
-                    "documentonum = @documentonum" +
-                    "nacionalidad = @nacionalidad" +
-                    "fechanacimiento = @fechanacimiento" +
-                    "ciudad = @ciudad" +
+                    "documentonum = @documentonum," +
+                    "nacionalidad = @nacionalidad," +
+                    "fechanacimiento = @fechanacimiento," +
+                    "ciudad = @ciudad," +
+                    "idciudad = @idciudad " +
                     $"WHERE id = {id}", cliente);
                 return "Se modificaron los datos correctamente...";
             }
