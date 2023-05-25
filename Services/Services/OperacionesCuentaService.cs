@@ -39,7 +39,7 @@ namespace Services.Services
         
         private bool validarDatos(CuentaModel cuenta)
         {
-            if (cuenta.numeroCuenta == null)
+            if (cuenta.numeroCuenta == null && cuenta.saldo < 0)
             {
                 return true;
             }
