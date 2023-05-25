@@ -60,5 +60,11 @@ namespace ParcialOptativo.Controllers
         {
             return Ok("Extracto impreso con éxito");
         }
+        
+        [HttpPost("retirar")]
+        public IActionResult retirar(int idCuenta)
+        {
+            return Ok("El retiro se realizó con éxito");
+        }
     }
 }
