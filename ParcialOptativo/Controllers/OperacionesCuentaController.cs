@@ -20,7 +20,7 @@ namespace ParcialOptativo.Controllers
         private string monto = "";
         private string idCuenta = "";
 
-        [HttpPost("depositar")]
+        [HttpPut("depositar")]
         public IActionResult Depositar([FromBody] CuentaModel cuenta, int id)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -43,13 +43,13 @@ namespace ParcialOptativo.Controllers
             }
         }
 
-        [HttpPost("transferir")]
+        [HttpPut("transferir")]
         public IActionResult Transferir([FromBody] CuentaModel cuenta)
         {
             return Ok("Transferencia realizada con éxito.");
         }
 
-        [HttpPost("bloquear")]
+        [HttpPut("bloquear")]
         public IActionResult Bloquear([FromBody] CuentaModel cuenta)
         {
             return Ok("Cuenta bloqueada con éxito.");
@@ -61,7 +61,7 @@ namespace ParcialOptativo.Controllers
             return Ok("Extracto impreso con éxito");
         }
         
-        [HttpPost("retirar")]
+        [HttpPut("retirar")]
         public IActionResult retirar(int idCuenta)
         {
             return Ok("El retiro se realizó con éxito");
