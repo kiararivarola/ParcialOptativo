@@ -8,7 +8,7 @@
 
         public string numeroCuenta { get; set; }
 
-        public string saldo { get; set; }
+        public double saldo { get; set; }
 
         public string limiteSaldo { get; set; }
 
