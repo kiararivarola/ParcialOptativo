@@ -21,9 +21,25 @@ namespace Services.Services
         {
             return validarDatos(cuenta) ? repositoryOperacionesCuentaService.depositar(cuenta) : throw new Exception("Error en la validación");
         }
+        
+        public string transferir(CuentaModel cuenta)
+        {
+            return validarDatos(cuenta) ? repositoryOperacionesCuentaService.transferir(cuenta) : throw new Exception("Error en la validación");
+        }
+        
+        public string bloquear(CuentaModel cuenta)
+        {
+            return validarDatos(cuenta) ? repositoryOperacionesCuentaService.bloquear(cuenta) : throw new Exception("Error en la validación");
+        }
+        
+        public string imprimirExtracto(CuentaModel cuenta)
+        {
+            return validarDatos(cuenta) ? repositoryOperacionesCuentaService.imprimirExtracto(cuenta) : throw new Exception("Error en la validación");
+        }
+        
         private bool validarDatos(CuentaModel cuenta)
         {
-            if (cuenta.saldo.Trim().Length < 3)
+            if (cuenta.numeroCuenta == null)
             {
                 return true;
             }
