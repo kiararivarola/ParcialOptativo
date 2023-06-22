@@ -1,0 +1,18 @@
+-- public.persona definition
+
+-- Drop table
+
+-- DROP TABLE public.persona;
+
+CREATE TABLE public.persona (
+	id serial4 NOT NULL,
+	nombre varchar(80) NULL,
+	apellido varchar(80) NULL,
+	tipodoc varchar(80) NULL,
+	documento varchar(80) NULL,
+	direccion varchar(80) NULL,
+	telefono varchar(80) NULL,
+	mail varchar(80) NULL,
+	estado bool NULL,
+	CONSTRAINT persona_pk PRIMARY KEY (id)
+);
