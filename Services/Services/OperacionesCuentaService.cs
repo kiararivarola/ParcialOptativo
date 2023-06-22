@@ -20,10 +20,12 @@ namespace Services.Services
 
         public string Transferir(int idCuentaOriginal, int idCuentaDestino, double monto)
         {
+
             var cuentaOr = repositoryCuenta.consultarCuenta(idCuentaOriginal);
             var cuentaDes = repositoryCuenta.consultarCuenta(idCuentaDestino);
+     
+            if (cuentaOr.numeroCuenta == null || cuentaOr.saldo < 0)
 
-            if (monto < 0)
             {
                 throw new ArgumentException("No debe ser un monto negativo.");
             }

@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ParcialOptativo.Model;
 using Services.Services;
+using System.Threading;
 
 namespace ParcialOptativo.Controllers
 {
@@ -26,7 +27,7 @@ namespace ParcialOptativo.Controllers
             try
             {
                 var resultado = operacionesCuentaService.Transferir(idCuentaOriginal, idCuentaDestino, monto);
-               
+
                 return Ok(resultado);
             }
             catch (ArgumentException ex)
@@ -41,8 +42,8 @@ namespace ParcialOptativo.Controllers
             {
                 return StatusCode(500, "An error occurred" + ex);
             }
-
         }
+         
 
         [HttpPut("Depositar/{idCuentaOriginal}")]
         public ActionResult Depositar(int idCuentaOriginal, double monto)
@@ -133,6 +134,12 @@ namespace ParcialOptativo.Controllers
             {
                 return StatusCode(500, "An error occurred");
             }
+        }
+        
+        [HttpPut("retirar")]
+        public IActionResult retirar(int idCuenta)
+        {
+            return Ok("El retiro se realizó con éxito");
         }
     }
 }
