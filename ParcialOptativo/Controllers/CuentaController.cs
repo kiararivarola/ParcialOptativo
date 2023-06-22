@@ -9,6 +9,7 @@ namespace ParcialOptativo.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CuentaController : ControllerBase
     {
         private CuentaService cuentaService;
@@ -27,7 +28,7 @@ namespace ParcialOptativo.Controllers
             return Ok(resultado);
         }
 
-        [HttpGet("ConsultarCuenta")]
+        [HttpGet("ConsultarCuenta/{id}")]
         public ActionResult<CuentaModel> ConsultarCuenta(int id)
         {
             var resultado = this.cuentaService.consultarCuenta(id);
@@ -72,10 +73,5 @@ namespace ParcialOptativo.Controllers
             var resultado = this.cuentaService.eliminarCuenta(id);
             return Ok(resultado);
         }
-
-        // public IActionResult Index()
-        // {
-        //     return View();
-        // }
     }
 }

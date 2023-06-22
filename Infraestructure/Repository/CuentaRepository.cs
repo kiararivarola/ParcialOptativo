@@ -23,8 +23,8 @@ namespace Infraestructure.Repository
             try
             {
                 connection.Execute(" insert into cuenta "
-                    + "(nombrecuenta, numerocuenta, saldo, limitesaldo, limitetransferencia, estadocuenta, idpersona) "
-                    + " values (@nombrecuenta, @numerocuenta, @saldo, @limitesaldo, @limitetransferencia, @estadocuenta, @idpersona)", cuenta);
+                    + "(nombrecuenta, numerocuenta, saldo, limitesaldo, limitetransferencia, estadocuenta) "
+                    + " values (@nombrecuenta, @numerocuenta, @saldo, @limitesaldo, @limitetransferencia, @estadocuenta)", cuenta);
                 return "Se insertó la cuenta correctamente...";
             }
             catch (Exception ex)
@@ -43,8 +43,8 @@ namespace Infraestructure.Repository
                     " saldo = @saldo, " +
                     " limitesaldo = @limitesaldo, " +
                     " limitetransferencia = @limitetransferencia," +
-                    " estadocuenta = @estadocuenta, " +
-                    " idpersona = @idpersona " +
+                    " estadocuenta = @estadocuenta " +
+                  //  " idpersona = @idpersona " +
                     $" WHERE id = {id}", cuenta);
                 return "Se modificaron los datos correctamente...";
             }

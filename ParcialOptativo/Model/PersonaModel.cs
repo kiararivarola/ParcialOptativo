@@ -18,7 +18,7 @@
 
         public string mail { get; set; }
 
-        public string estado { get; set; }
+        public bool estado { get; set; }
 
     }
 }

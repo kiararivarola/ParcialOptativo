@@ -9,6 +9,7 @@ namespace ParcialOptativo.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PersonaController : ControllerBase
     {
         private PersonaService personaService;
@@ -27,7 +28,7 @@ namespace ParcialOptativo.Controllers
             return Ok(resultado);
         }
 
-        [HttpGet("ConsultarPersona")]
+        [HttpGet("ConsultarPersona/{id}")]
         public ActionResult<PersonaModel> ConsultarPersona(int id)
         {
             var resultado = this.personaService.consultarPersona(id);
@@ -74,10 +75,5 @@ namespace ParcialOptativo.Controllers
             var resultado = this.personaService.eliminarPersona(id);
             return Ok(resultado);
         }
-
-        // public IActionResult Index()
-        // {
-        //     return View();
-        // }
     }
 }

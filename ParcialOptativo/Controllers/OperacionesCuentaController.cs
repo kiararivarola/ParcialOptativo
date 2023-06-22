@@ -1,64 +1,138 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ParcialOptativo.Model;
+using Services.Services;
 
 namespace ParcialOptativo.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class OperacionesCuentaController : Controller
     {
-        private readonly string _connectionString = "";
-        //private Npgsql.NpgsqlConnection connection;
-        public OperacionesCuentaController(IConfiguration configuration)
+        private OperacionesCuentaService operacionesCuentaService;
+
+        public OperacionesCuentaController(OperacionesCuentaService operacionCuentaService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            this.operacionesCuentaService = operacionCuentaService;
         }
 
-        private string monto = "";
-        private string idCuenta = "";
-
-        [HttpPost("depositar")]
-        public IActionResult Depositar([FromBody] CuentaModel cuenta, int id)
+        [HttpPut("{idCuentaOriginal}/Transferir/{idCuentaDestino}")]
+        public ActionResult Transferir(int idCuentaOriginal, int idCuentaDestino, double monto)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            try
             {
-                connection.Open();
+                var resultado = operacionesCuentaService.Transferir(idCuentaOriginal, idCuentaDestino, monto);
+               
+                return Ok(resultado);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred" + ex);
+            }
 
-                var cuentaExistente = connection.ExecuteScalar<int>(
-                    " select count(*) from cuenta where id = @id", new { Id = idCuenta }
-                );
+        }
 
-                if (cuentaExistente == 0)
-                {
-                    return NotFound("Cuenta no encontrada.");
+        [HttpPut("Depositar/{idCuentaOriginal}")]
+        public ActionResult Depositar(int idCuentaOriginal, double monto)
+        {
+            try
+            {
+                var resultado = operacionesCuentaService.Depositar(idCuentaOriginal, monto);
 
-
-                    connection.Execute("update cuenta set saldo = saldo + @cuenta where id = @id", new { cuenta = monto, id = idCuenta });
-                }
-
-                return Ok("Depósito realizado con éxito.");
+                return Ok(resultado);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred");
             }
         }
 
-        [HttpPost("transferir")]
-        public IActionResult Transferir([FromBody] CuentaModel cuenta)
+        [HttpPut("Extraer/{idCuentaOriginal}")]
+        public ActionResult Extraer(double monto, int idCuentaOriginal)
         {
-            return Ok("Transferencia realizada con éxito.");
+            try
+            {
+                var resultado = operacionesCuentaService.Extraer(monto, idCuentaOriginal);
+                return Ok(resultado);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred");
+            }
         }
 
-        [HttpPost("bloquear")]
-        public IActionResult Bloquear([FromBody] CuentaModel cuenta)
+        [HttpDelete("Bloquear/{idCuentaOriginal}")]
+        public ActionResult Bloquear(int idCuentaOriginal)
         {
-            return Ok("Cuenta bloqueada con éxito.");
+            try
+            {
+                var resultado = operacionesCuentaService.Bloquear(idCuentaOriginal);
+
+                return Ok(resultado);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred");
+            }
         }
 
-        [HttpGet("imprimirExtracto")]
-        public IActionResult ImprimirExtracto(int idCuenta)
+        [HttpPost("Imprimir/{idCuentaOriginal}")]
+        public ActionResult Imprimir(int idCuentaOriginal)
         {
-            return Ok("Extracto impreso con éxito");
+            try
+            {
+                var resultado = operacionesCuentaService.Imprimir(idCuentaOriginal);
+
+                return Ok(resultado);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An error occurred");
+            }
         }
     }
 }
